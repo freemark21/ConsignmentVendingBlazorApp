@@ -1,0 +1,58 @@
+﻿@page "/Returns"
+@using DataAccessLibrary
+@using DataAccessLibrary.Models
+
+@inject IReturnsData _db
+
+<h1>Returns</h1>
+
+@if (returns is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Customer Number</th>
+                <th>Ship To</th>
+                <th>Company Number</th>
+                <th>Warehouse</th>
+                <th>UserID</th>
+                <th>Replenex Number</th>
+                <th>Qty</th>
+                <th>Unit of Issue</th>
+                <th>Product Name</th>
+                <th>SupplyPro Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in returns)
+            {
+                <tr>
+                    <td>@item.CustomerNumber</td>
+                    <td>@item.ShipTo</td>
+                    <td>@item.Cono</td>
+                    <td>@item.Whse</td>
+                    <td>@item.UserID</td>
+                    <td>@item.ReplenexNumber</td>
+                    <td>@item.Qty</td>
+                    <td>@item.UnitOfIssue</td>
+                    <td>@item.ProductName</td>
+                    <td>@item.SupplyProPrice</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<ReturnModel> returns;
+
+    protected override async Task OnInitializedAsync()
+    {
+        returns = await _db.GetReturns();
+    }
+
+}
