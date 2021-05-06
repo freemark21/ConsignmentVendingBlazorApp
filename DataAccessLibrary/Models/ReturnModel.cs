@@ -28,5 +28,11 @@ namespace DataAccessLibrary.Models
 
         public string ShipTo { get; set; }
 
+        public int SupplyProQty { get; set; }
+
+        public DateTime SupplyProQtyDate { get; set; }
+
+        public int WhseQtyAvail { get; set; }
+
     }
 }

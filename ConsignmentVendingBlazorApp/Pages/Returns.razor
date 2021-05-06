@@ -12,6 +12,7 @@
 }
 else
 {
+    <button class="btn-outline-danger">Submit To SXe</button>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -25,6 +26,10 @@ else
                 <th>Unit of Issue</th>
                 <th>Product Name</th>
                 <th>SupplyPro Price</th>
+                <th>SupplyPro Qty</th>
+                <th>SupplyPro Qty Date</th>
+                <th>Whse Qty Available</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -41,6 +46,10 @@ else
                     <td>@item.UnitOfIssue</td>
                     <td>@item.ProductName</td>
                     <td>@item.SupplyProPrice</td>
+                    <td>@item.SupplyProQty</td>
+                    <td>@item.SupplyProQtyDate</td>
+                    <td>@item.WhseQtyAvail</td>
+                    <td><button class="btn-block">Edit</button><button class="btn-block" @onclick="NavToDelete">Delete</button></td>
                 </tr>
             }
         </tbody>
