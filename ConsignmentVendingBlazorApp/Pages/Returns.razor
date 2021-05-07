@@ -3,6 +3,7 @@
 @using DataAccessLibrary.Models
 
 @inject IReturnsData _db
+@inject NavigationManager NavigationManager
 
 <h1>Returns</h1>
 
@@ -12,10 +13,11 @@
 }
 else
 {
-    <button class="btn-outline-danger">Submit To SXe</button>
+    <button class="btn btn-danger">Submit To SXe</button>
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Customer Number</th>
                 <th>Ship To</th>
                 <th>Company Number</th>
@@ -36,6 +38,7 @@ else
             @foreach (var item in returns)
             {
                 <tr>
+                    <td>@item.ID</td>
                     <td>@item.CustomerNumber</td>
                     <td>@item.ShipTo</td>
                     <td>@item.Cono</td>
@@ -49,7 +52,7 @@ else
                     <td>@item.SupplyProQty</td>
                     <td>@item.SupplyProQtyDate</td>
                     <td>@item.WhseQtyAvail</td>
-                    <td><button class="btn-block">Edit</button><button class="btn-block" @onclick="NavToDelete">Delete</button></td>
+                    <td><a class="alert alert-primary" href="/editreturn/@item.ID">Edit</a><a class="alert alert-danger" href="/deletereturn/@item.ID">Delete</a></td>
                 </tr>
             }
         </tbody>

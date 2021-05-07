@@ -11,22 +11,33 @@
 <br />
 <div class="col-md-4">
     <table class="table">
+        <thead>
+            <tr>
+                <th>Cono</th>
+                <th>Customer Number</th>
+                <th>Ship To</th>
+                <th>Replenex Number</th>
+                <th>Qty</th>
+                <th>Whse</th>
+            </tr>
+        </thead>
         <tr>
-            <td>Customer Number</td>
-            <td>@</td>
-            <td>Replenex Number</td>
-            <td>Qty</td>
+            <td>@item.Cono</td>
+            <td>@item.CustomerNumber</td>
+            <td>@item.ShipTo</td>
+            <td>@item.ReplenexNumber</td>
+            <td>@item.Qty</td>
+            <td>@item.Whse</td>
         </tr>
     </table>
 </div>
 @code {
     [Parameter]
     public int id { get; set; }
-    ReturnModel item = new ReturnModel();
+    private ReturnModel item;
 
     protected override async Task OnInitializedAsync()
     {
-        await DeleteReturn(id);
+        item = await _db.GetSingleReturn(id);
     }
-
 }

@@ -34,5 +34,7 @@ namespace DataAccessLibrary.Models
 
         public int WhseQtyAvail { get; set; }
 
+        public int ID { get; set; }
+
     }
 }

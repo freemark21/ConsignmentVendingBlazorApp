@@ -28,10 +28,10 @@ namespace DataAccessLibrary
             return _db.SaveData(sql, ID);
         }
 
-        public Task<List<ReturnModel>> GetSingleReturn(int ID)
+        public Task<ReturnModel> GetSingleReturn(int ID)
         {
             string sql = "spConsignmentReturns_GetSingleReturn @ID";
-            return _db.LoadData<ReturnModel, dynamic>(sql, ID);
+            return _db.LoadSingle<ReturnModel, dynamic>(sql, ID);
         }
     }
 }
