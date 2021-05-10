@@ -1,4 +1,3 @@
-using ConsignmentVendingBlazorApp.Data;
 using DataAccessLibrary;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -29,7 +28,6 @@ namespace ConsignmentVendingBlazorApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddTransient<ISqlDataAccess, SqlDataAccess>();
             services.AddTransient<IReturnsData, ReturnsData>();
         }
