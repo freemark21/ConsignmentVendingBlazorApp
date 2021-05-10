@@ -18,42 +18,47 @@ else
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Cono</th>
                 <th>Customer Number</th>
                 <th>Ship To</th>
-                <th>Company Number</th>
                 <th>Warehouse</th>
                 <th>UserID</th>
-                <th>Replenex Number</th>
+                <th>Customer Part#</th>
+                <th>Product Name</th>
+                <th>Replenex Part#</th>
                 <th>Qty</th>
                 <th>Unit of Issue</th>
-                <th>Product Name</th>
                 <th>SupplyPro Price</th>
-                <th>SupplyPro Qty</th>
                 <th>SupplyPro Qty Date</th>
+                <th>SupplyPro Qty</th>
                 <th>Whse Qty Available</th>
+                <th>Actual</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in returns)
             {
-                <tr>
-                    <td>@item.ID</td>
-                    <td>@item.CustomerNumber</td>
-                    <td>@item.ShipTo</td>
-                    <td>@item.Cono</td>
-                    <td>@item.Whse</td>
-                    <td>@item.UserID</td>
-                    <td>@item.ReplenexNumber</td>
-                    <td>@item.Qty</td>
-                    <td>@item.UnitOfIssue</td>
-                    <td>@item.ProductName</td>
-                    <td>@item.SupplyProPrice</td>
-                    <td>@item.SupplyProQty</td>
-                    <td>@item.SupplyProQtyDate</td>
-                    <td>@item.WhseQtyAvail</td>
-                    <td><a class="alert alert-primary" href="/editreturn/@item.ID">Edit</a><a class="alert alert-danger" href="/deletereturn/@item.ID">Delete</a></td>
-                </tr>
+                int actual = item.WhseQtyAvail - item.SupplyProQty;
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.Cono</td>
+                <td>@item.CustomerNumber</td>
+                <td>@item.ShipTo</td>
+                <td>@item.Whse</td>
+                <td>@item.UserID</td>
+                <td>customerpart#</td>
+                <td>@item.ProductName</td>
+                <td>@item.ReplenexNumber</td>
+                <td>@item.Qty</td>
+                <td>@item.UnitOfIssue</td>
+                <td>@item.SupplyProPrice</td>
+                <td>@item.SupplyProQtyDate</td>
+                <td>@item.SupplyProQty</td>
+                <td>@item.WhseQtyAvail</td>
+                <td>@actual</td>
+                <td><a class="alert alert-primary" href="/editreturn/@item.ID">Edit</a><a class="alert alert-danger" href="/deletereturn/@item.ID">Delete</a></td>
+            </tr>
             }
         </tbody>
     </table>
