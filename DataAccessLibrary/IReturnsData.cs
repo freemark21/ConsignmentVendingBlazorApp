@@ -9,6 +9,6 @@ namespace DataAccessLibrary
         Task DeleteRecord(int ID);
         Task<List<ReturnModel>> GetReturns();
 
-        Task<ReturnModel> GetSingleReturn(int ID);
+        Task<List<ReturnModel>> GetSingleReturn(int ID);
     }
 }

@@ -6,6 +6,12 @@
 @inject NavigationManager NavigationManager
 @inject IReturnsData _db
 
+@if (item is null)
+{
+    <p><em>Loading...</em></p>
+}
+else 
+{ 
 <h3>Confirm Delete</h3>
 <p>Are you sure you want to delete this return with ID: <b>@id</b></p>
 <br />
@@ -22,22 +28,37 @@
             </tr>
         </thead>
         <tr>
-            <td>@item.Cono</td>
-            <td>@item.CustomerNumber</td>
-            <td>@item.ShipTo</td>
-            <td>@item.ReplenexNumber</td>
-            <td>@item.Qty</td>
-            <td>@item.Whse</td>
+            <td>@item[0].Cono</td>
+            <td>@item[0].CustomerNumber</td>
+            <td>@item[0].ShipTo</td>
+            <td>@item[0].ReplenexNumber</td>
+            <td>@item[0].Qty</td>
+            <td>@item[0].Whse</td>
         </tr>
     </table>
+    <button type="submit" class="btn btn-danger" @onclick="DeleteRecord">DELETE</button>
+    <button type="button" class="btn btn-primary" @onclick="NavToReturns">CANCEL</button>
 </div>
+}
 @code {
     [Parameter]
     public int id { get; set; }
-    private ReturnModel item;
+    private List<ReturnModel> item;
 
     protected override async Task OnInitializedAsync()
     {
         item = await _db.GetSingleReturn(id);
     }
+
+    private async Task DeleteRecord()
+    {
+        await _db.DeleteRecord(id);
+        NavigationManager.NavigateTo("returns");
+    }
+
+    private void NavToReturns()
+    {
+        NavigationManager.NavigateTo("returns");
+    }
+
 }

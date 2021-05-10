@@ -25,13 +25,13 @@ namespace DataAccessLibrary
         public Task DeleteRecord(int ID)
         {
             string sql = "spConsignmentReturns_DeleteRecord @ID";
-            return _db.SaveData(sql, ID);
+            return _db.SaveData(sql, new { ID });
         }
 
-        public Task<ReturnModel> GetSingleReturn(int ID)
+        public Task<List<ReturnModel>> GetSingleReturn(int ID)
         {
-            string sql = "spConsignmentReturns_GetSingleReturn @ID";
-            return _db.LoadSingle<ReturnModel, dynamic>(sql, ID);
+            string sql = "spConsignmentReturns_GetSingleRecord @ID";
+            return _db.LoadData<ReturnModel, dynamic>(sql, new { ID });
         }
     }
 }
