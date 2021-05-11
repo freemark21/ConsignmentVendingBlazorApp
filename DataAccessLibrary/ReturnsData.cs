@@ -33,5 +33,11 @@ namespace DataAccessLibrary
             string sql = "spConsignmentReturns_GetSingleRecord @ID";
             return _db.LoadData<ReturnModel, dynamic>(sql, new { ID });
         }
+
+        public Task SaveRecord(int ID)
+        {
+            string sql = "spConsignmentReturns_SaveRecord @ID";
+            return _db.SaveData(sql, new { ID });
+        }
     }
 }

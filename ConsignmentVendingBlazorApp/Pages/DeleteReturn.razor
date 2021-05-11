@@ -10,36 +10,40 @@
 {
     <p><em>Loading...</em></p>
 }
-else 
-{ 
-<h3>Confirm Delete</h3>
-<p>Are you sure you want to delete this return with ID: <b>@id</b></p>
-<br />
-<div class="col-md-4">
-    <table class="table">
-        <thead>
+else
+{
+    <h3>Confirm Delete</h3>
+    <p>Are you sure you want to delete this return with ID: <b>@id</b></p>
+    <br />
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Cono</th>
+                    <th>Customer Number</th>
+                    <th>Ship To</th>
+                    <th>Whse</th>
+                    <th>Replenex Number</th>
+                    <th>Qty</th>
+                    <th>Unit of Issue</th>
+                </tr>
+            </thead>
             <tr>
-                <th>Cono</th>
-                <th>Customer Number</th>
-                <th>Ship To</th>
-                <th>Replenex Number</th>
-                <th>Qty</th>
-                <th>Whse</th>
+                <td>@item[0].Cono</td>
+                <td>@item[0].CustomerNumber</td>
+                <td>@item[0].ShipTo</td>
+                <td>@item[0].Whse</td>
+                <td>@item[0].ReplenexNumber</td>
+                <td>@item[0].Qty</td>
+                <td>@item[0].UnitOfIssue</td>
+
             </tr>
-        </thead>
-        <tr>
-            <td>@item[0].Cono</td>
-            <td>@item[0].CustomerNumber</td>
-            <td>@item[0].ShipTo</td>
-            <td>@item[0].ReplenexNumber</td>
-            <td>@item[0].Qty</td>
-            <td>@item[0].Whse</td>
-        </tr>
-    </table>
-    <button type="submit" class="btn btn-danger" @onclick="DeleteRecord">DELETE</button>
-    <button type="button" class="btn btn-primary" @onclick="NavToReturns">CANCEL</button>
-</div>
+        </table>
+        <button type="submit" class="btn btn-danger" @onclick="DeleteRecord">DELETE</button>
+        <button type="button" class="btn btn-primary" @onclick="NavToReturns">CANCEL</button>
+    </div>
 }
+
 @code {
     [Parameter]
     public int id { get; set; }
@@ -53,7 +57,7 @@ else
     private async Task DeleteRecord()
     {
         await _db.DeleteRecord(id);
-        NavigationManager.NavigateTo("returns");
+        NavToReturns();
     }
 
     private void NavToReturns()

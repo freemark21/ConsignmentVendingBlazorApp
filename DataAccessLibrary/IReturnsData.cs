@@ -7,6 +7,9 @@ namespace DataAccessLibrary
     public interface IReturnsData
     {
         Task DeleteRecord(int ID);
+
+        Task SaveRecord(int ID);
+
         Task<List<ReturnModel>> GetReturns();
 
         Task<List<ReturnModel>> GetSingleReturn(int ID);
