@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ConsignmentVendingBlazorApp.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,8 @@ namespace ConsignmentVendingBlazorApp.Services
 {
     public class ApiService
     {
+        public HttpClient _httpClient;
 
-
-        #endregion
         public ApiService(HttpClient client)
         {
             _httpClient = client;
@@ -20,7 +20,7 @@ namespace ConsignmentVendingBlazorApp.Services
 
         public async Task<Token> GetToken()
         {
-            
+
             var form = new Dictionary<string, string>
                 {
                     {"grant_type", "password"},
@@ -35,6 +35,22 @@ namespace ConsignmentVendingBlazorApp.Services
             var jsonContent = await tokenResponse.Content.ReadAsStringAsync();
             Token token = JsonConvert.DeserializeObject<Token>(jsonContent);
             return token;
+        }
+
+        public async Task<WhseProdAvailResponse> GetWhseProdAvail(string cono, string customerNumber, string replenexNumber, string unitOfMeasure, string whse)
+        {
+            var form = new Dictionary<string, string>
+            {
+                {"companyNumber", cono },
+                {"operatorInit", "sys" },
+                {"operatorPassword", "" },
+                {"productCode", replenexNumber },
+                {"unitOfMeasure", unitOfMeasure },
+                {"warehouse", whse },
+                {"useCrossReferenceFlag", "false" },
+                {"includeUnavailableInventory", "false" },
+            };
+
         }
 
 
