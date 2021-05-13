@@ -50,7 +50,7 @@ namespace ConsignmentVendingBlazorApp.Services
                 {"useCrossReferenceFlag", "false" },
                 {"includeUnavailableInventory", "false" },
             };
-
+            throw new NotImplementedException();
         }
 
 
