@@ -1,3 +1,4 @@
+using ConsignmentVendingBlazorApp.Services;
 using DataAccessLibrary;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -30,6 +31,10 @@ namespace ConsignmentVendingBlazorApp
             services.AddServerSideBlazor();
             services.AddTransient<ISqlDataAccess, SqlDataAccess>();
             services.AddTransient<IReturnsData, ReturnsData>();
+            services.AddHttpClient<ApiService>(client =>
+            {
+                client.BaseAddress = new Uri("https://mingle-ionapi.inforcloudsuite.com/REPLENEX_PRD/SX/web/sxapirestservice");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

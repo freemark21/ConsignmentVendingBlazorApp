@@ -2,7 +2,8 @@
 @using DataAccessLibrary
 @using DataAccessLibrary.Models
 
-@inject IReturnsData _db
+@inject IReturnsData _db 
+@inject Services.ApiService apiService
 @inject NavigationManager NavigationManager
 
 <h1>Returns</h1>
@@ -47,7 +48,7 @@ else
                 <td>@item.ShipTo</td>
                 <td>@item.Whse</td>
                 <td>@item.UserID</td>
-                <td>customerpart#</td>
+                <td>@item.CustomerPartNum</td>
                 <td>@item.ProductName</td>
                 <td>@item.ReplenexNumber</td>
                 <td>@item.Qty</td>
@@ -67,10 +68,12 @@ else
 
 @code {
     private List<ReturnModel> returns;
+    
 
     protected override async Task OnInitializedAsync()
     {
         returns = await _db.GetReturns();
+        var token = await apiService.GetToken();
     }
 
 }

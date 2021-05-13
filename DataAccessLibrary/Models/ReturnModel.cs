@@ -36,5 +36,7 @@ namespace DataAccessLibrary.Models
 
         public int ID { get; set; }
 
+        public string CustomerPartNum { get; set; }
+
     }
 }
