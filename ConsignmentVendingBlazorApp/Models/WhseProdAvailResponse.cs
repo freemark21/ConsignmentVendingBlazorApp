@@ -30,40 +30,40 @@ namespace ConsignmentVendingBlazorApp.Models
             public string ReturnUnitOfMeasure { get; set; }
 
             [JsonProperty("customerQuantityOnHand")]
-            public int CustomerQuantityOnHand { get; set; }
+            public decimal CustomerQuantityOnHand { get; set; }
 
             [JsonProperty("customerQuantityOnOrder")]
-            public int CustomerQuantityOnOrder { get; set; }
+            public decimal CustomerQuantityOnOrder { get; set; }
 
             [JsonProperty("customerQuantityUnavailable")]
-            public int CustomerQuantityUnavailable { get; set; }
+            public decimal CustomerQuantityUnavailable { get; set; }
 
             [JsonProperty("customerNetAvailable")]
-            public int CustomerNetAvailable { get; set; }
+            public decimal CustomerNetAvailable { get; set; }
 
             [JsonProperty("distributorQuantityOnHand")]
-            public int DistributorQuantityOnHand { get; set; }
+            public decimal DistributorQuantityOnHand { get; set; }
 
             [JsonProperty("distributorQuantityOnOrder")]
-            public int DistributorQuantityOnOrder { get; set; }
+            public decimal DistributorQuantityOnOrder { get; set; }
 
             [JsonProperty("distributorQuantityUnavailable")]
-            public int DistributorQuantityUnavailable { get; set; }
+            public decimal DistributorQuantityUnavailable { get; set; }
 
             [JsonProperty("distributorNetAvailable")]
-            public int DistributorNetAvailable { get; set; }
+            public decimal DistributorNetAvailable { get; set; }
 
             [JsonProperty("totalQuantityOnHand")]
-            public int TotalQuantityOnHand { get; set; }
+            public decimal TotalQuantityOnHand { get; set; }
 
             [JsonProperty("totalQuantityOnOrder")]
-            public int TotalQuantityOnOrder { get; set; }
+            public decimal TotalQuantityOnOrder { get; set; }
 
             [JsonProperty("totalQuantityUnavailable")]
-            public int TotalQuantityUnavailable { get; set; }
+            public decimal TotalQuantityUnavailable { get; set; }
 
             [JsonProperty("totalNetAvailable")]
-            public int TotalNetAvailable { get; set; }
+            public decimal TotalNetAvailable { get; set; }
 
             [JsonProperty("customerOnlyFlag")]
             public bool CustomerOnlyFlag { get; set; }
@@ -88,8 +88,8 @@ namespace ConsignmentVendingBlazorApp.Models
         public class TOutfieldvalue
         {
             public string level { get; set; }
-            public int lineno { get; set; }
-            public int seqno { get; set; }
+            public string lineno { get; set; }
+            public string seqno { get; set; }
             public string fieldname { get; set; }
             public string fieldvalue { get; set; }
         }

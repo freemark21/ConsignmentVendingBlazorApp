@@ -32,7 +32,7 @@ namespace DataAccessLibrary.Models
 
         public DateTime SupplyProQtyDate { get; set; }
 
-        public int WhseQtyAvail { get; set; }
+        public decimal WhseQtyAvail { get; set; }
 
         public int ID { get; set; }
 

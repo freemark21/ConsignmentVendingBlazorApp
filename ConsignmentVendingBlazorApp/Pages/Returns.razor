@@ -1,6 +1,7 @@
 ﻿@page "/Returns"
 @using DataAccessLibrary
 @using DataAccessLibrary.Models
+@using ConsignmentVendingBlazorApp.Models
 
 @inject IReturnsData _db 
 @inject Services.ApiService apiService
@@ -40,7 +41,7 @@ else
         <tbody>
             @foreach (var item in returns)
             {
-                int actual = item.WhseQtyAvail - item.SupplyProQty;
+                int actual = Convert.ToInt32(item.WhseQtyAvail) - item.SupplyProQty;
             <tr>
                 <td>@item.ID</td>
                 <td>@item.Cono</td>
@@ -68,12 +69,15 @@ else
 
 @code {
     private List<ReturnModel> returns;
-    
+    private Token token;
 
     protected override async Task OnInitializedAsync()
     {
         returns = await _db.GetReturns();
-        var token = await apiService.GetToken();
+        token = await apiService.GetToken();
+        foreach (var item in returns)
+        {
+            item.WhseQtyAvail = await apiService.GetWhseProdAvail(item.Cono, item.CustomerNumber, item.ReplenexNumber, item.UnitOfIssue, item.Whse, token); ;
+        }
     }
-
 }

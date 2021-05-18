@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ConsignmentVendingBlazorApp.Services
@@ -37,36 +38,33 @@ namespace ConsignmentVendingBlazorApp.Services
             return token;
         }
 
-        public async Task<WhseProdAvailResponse> GetWhseProdAvail(string cono, string customerNumber, string replenexNumber, string unitOfMeasure, string whse)
+        public async Task<decimal> GetWhseProdAvail(string cono, string customerNumber, string replenexNumber, string unitOfMeasure, string whse, Token token)
         {
-            var form = new Dictionary<string, string>
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token.AccessToken);
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var quote = "\"";
+            var body = $"{{\r\n {quote}request{quote}: {{\r\n {quote}companyNumber{quote}: {cono},\r\n {quote}operatorInit{quote}: {quote}sys{quote},\r\n {quote}operatorPassword{quote}: {quote}{quote},\r\n {quote}productCode{quote}: {quote}{replenexNumber}{quote},\r\n {quote}unitOfMeasure{quote}: {quote}{unitOfMeasure}{quote},\r\n {quote}warehouse{quote}: {quote}{whse}{quote},\r\n {quote}useCrossReferenceFlag{quote}: {quote}false{quote},\r\n {quote}includeUnavailableInventory{quote}: {quote}false{quote},\r\n {quote}tInfieldvalue{quote}: {{\r\n {quote}t-infieldvalue{quote}: []\r\n }}\r\n }}\r\n }}";
+            StringContent content = new StringContent(body, Encoding.UTF8, "application/json");
+
+            using (HttpResponseMessage response = await _httpClient.PostAsync(WhseAvailCall, content))
             {
-                {"companyNumber", cono },
-                {"operatorInit", "sys" },
-                {"operatorPassword", "" },
-                {"productCode", replenexNumber },
-                {"unitOfMeasure", unitOfMeasure },
-                {"warehouse", whse },
-                {"useCrossReferenceFlag", "false" },
-                {"includeUnavailableInventory", "false" },
-            };
-            throw new NotImplementedException();
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    WhseProdAvailResponse.Rootobject responseRootObject = JsonConvert.DeserializeObject<WhseProdAvailResponse.Rootobject>(jsonResponse);
+                    if (responseRootObject.Response is null)
+                    {
+                        return -99;
+                    }
+                    WhseProdAvailResponse.Response responseContent = responseRootObject.Response;
+                    return responseContent.DistributorNetAvailable;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
         }
 
-
-        public class Token
-        {
-            [JsonProperty("access_token")]
-            public string AccessToken { get; set; }
-
-            [JsonProperty("token_type")]
-            public string TokenType { get; set; }
-
-            [JsonProperty("expires_in")]
-            public int ExpiresIn { get; set; }
-
-            [JsonProperty("refresh_token")]
-            public string RefreshToken { get; set; }
-        }
     }
 }
