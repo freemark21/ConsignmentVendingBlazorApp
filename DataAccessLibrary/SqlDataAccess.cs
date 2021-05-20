@@ -31,22 +31,12 @@ namespace DataAccessLibrary
             }
         }
 
-        public async Task<T> LoadSingle<T, U>(string sql, U parameters)
-        {
-            string connectionString = _config.GetConnectionString(ConnectionStringName);
-            using (IDbConnection connection = new SqlConnection(connectionString))
-            {
-                var data = await connection.QueryAsync<T>(sql, parameters);
-                return (T)data;
-            }
-        }
-
         public async Task SaveData<T>(string sql, T parameters)
         {
             string connectionString = _config.GetConnectionString(ConnectionStringName);
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
-                await connection.ExecuteAsync(sql, parameters);
+                await connection.ExecuteAsync(sql, parameters, commandType: CommandType.StoredProcedure);
             }
         }
     }

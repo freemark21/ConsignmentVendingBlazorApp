@@ -8,7 +8,7 @@ namespace DataAccessLibrary
     {
         Task DeleteRecord(int ID);
 
-        Task SaveRecord(int ID);
+        Task SaveRecord(ReturnModel returnModel);
 
         Task<List<ReturnModel>> GetReturns();
 

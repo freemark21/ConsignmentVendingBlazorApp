@@ -1,4 +1,5 @@
-﻿using DataAccessLibrary.Models;
+﻿using Dapper;
+using DataAccessLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +35,13 @@ namespace DataAccessLibrary
             return _db.LoadData<ReturnModel, dynamic>(sql, new { ID });
         }
 
-        public Task SaveRecord(int ID)
+        public Task SaveRecord(ReturnModel item)
         {
-            string sql = "spConsignmentReturns_SaveRecord @ID";
-            return _db.SaveData(sql, new { ID });
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@ID", item.ID);
+            parameters.Add("@Qty", item.Qty);
+            string sql = "spConsignmentReturns_SaveRecord";
+            return _db.SaveData(sql, parameters);
         }
     }
 }

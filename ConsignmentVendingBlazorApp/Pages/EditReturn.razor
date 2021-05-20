@@ -17,33 +17,33 @@ else
         <form>
             <div class="form-group">
                 <label for="Cono">Cono</label>
-                <input type="number" class="form-control" aria-describedby="emailHelp" value="@item[0].Cono">
+                <input type="text" readonly class="form-control" @bind-value="@item[0].Cono">
             </div>
             <div class="form-group">
                 <label for="CustomerNumber">Customer Number</label>
-                <input type="text" class="form-control" value="@item[0].CustomerNumber">
+                <input type="text" readonly class="form-control" @bind-value="@item[0].CustomerNumber">
             </div>
             <div class="form-group">
                 <label for="ShipTo">Ship To</label>
-                <input type="text" class="form-control" value="@item[0].ShipTo">
+                <input type="text" readonly class="form-control" @bind-value="@item[0].ShipTo">
             </div>
             <div class="form-group">
                 <label for="Whse">Whse</label>
-                <input type="text" class="form-control" value="@item[0].Whse">
+                <input type="text" readonly class="form-control" @bind-value="@item[0].Whse">
             </div>
             <div class="form-group">
                 <label for="ReplenexNumber">Replenex Part#</label>
-                <input type="text" class="form-control" value="@item[0].ReplenexNumber">
+                <input type="text" readonly class="form-control" @bind-value="@item[0].ReplenexNumber">
             </div>
             <div class="form-group">
                 <label for="Qty">Qty</label>
-                <input type="number" class="form-control" value="@item[0].Qty">
+                <input type="number" class="form-control" @bind-value="@item[0].Qty">
             </div>
             <div class="form-group">
                 <label for="UnitOfIssue">Unit of Issue</label>
-                <input type="text" class="form-control" value="@item[0].UnitOfIssue">
+                <input type="text" class="form-control" @bind-value="@item[0].UnitOfIssue">
             </div>
-            <button type="submit" class="btn btn-success" @onclick="SaveRecord">SAVE</button>
+            <button type="button" class="btn btn-success" @onclick="SaveRecord">SAVE</button>
             <button type="button" class="btn btn-primary" @onclick="NavToReturns">CANCEL</button>
         </form>
     </div>
@@ -51,16 +51,18 @@ else
 @code {
     [Parameter]
     public int id { get; set; }
-    private List<ReturnModel> item;
+    private List<ReturnModel> item = null;
+    
 
     protected override async Task OnInitializedAsync()
     {
         item = await _db.GetSingleReturn(id);
+        
     }
 
     private async Task SaveRecord()
     {
-        await _db.SaveRecord(id);
+        await _db.SaveRecord(item[0]);
         NavToReturns();
     }
 
