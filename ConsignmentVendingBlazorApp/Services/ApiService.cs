@@ -46,8 +46,7 @@ namespace ConsignmentVendingBlazorApp.Services
             var body = $"{{\r\n {quote}request{quote}: {{\r\n {quote}companyNumber{quote}: {cono},\r\n {quote}operatorInit{quote}: {quote}sys{quote},\r\n {quote}operatorPassword{quote}: {quote}{quote},\r\n {quote}productCode{quote}: {quote}{replenexNumber}{quote},\r\n {quote}unitOfMeasure{quote}: {quote}{unitOfMeasure}{quote},\r\n {quote}warehouse{quote}: {quote}{whse}{quote},\r\n {quote}useCrossReferenceFlag{quote}: {quote}false{quote},\r\n {quote}includeUnavailableInventory{quote}: {quote}false{quote},\r\n {quote}tInfieldvalue{quote}: {{\r\n {quote}t-infieldvalue{quote}: []\r\n }}\r\n }}\r\n }}";
             StringContent content = new StringContent(body, Encoding.UTF8, "application/json");
 
-            using (HttpResponseMessage response = await _httpClient.PostAsync(WhseAvailCall, content))
-            {
+            HttpResponseMessage response = await _httpClient.PostAsync(WhseAvailCall, content);
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
@@ -63,8 +62,9 @@ namespace ConsignmentVendingBlazorApp.Services
                 {
                     throw new Exception(response.ReasonPhrase);
                 }
-            }
         }
+
+
 
     }
 }

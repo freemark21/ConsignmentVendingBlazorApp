@@ -51,14 +51,14 @@ else
                 <td>@item.CustomerPartNum</td>
                 <td>@item.ProductName</td>
                 <td>@item.ReplenexNumber</td>
-                <td>@item.Qty</td>
+                <td><input type="number" @bind-value="@item.Qty" /></td>
                 <td>@item.UnitOfIssue</td>
                 <td>@item.SupplyProPrice</td>
-                <td>@item.SupplyProQty</td>
+                <td><input type="number" @bind-value="@item.SupplyProQty"/></td>
                 <td>@item.WhseQtyAvail</td>
                 <td>@actual</td>
-                <td><a class="btn btn-primary" href="/editreturn/@item.ID">Edit</a>
-                <a class="btn btn-danger" href="/deletereturn/@item.ID" style="margin-top:5%">Delete</a></td>
+                <td><button type="button" class="btn btn-success" @onclick="@(() => SaveRecord(item))">SAVE</button>
+                <button type="button" class="btn btn-danger" href="/deletereturn/@item.ID" style="margin-top:5%">DELETE</button></td>
             </tr>
             }
         </tbody>
@@ -77,5 +77,9 @@ else
         {
             item.WhseQtyAvail = await apiService.GetWhseProdAvail(item.Cono, item.CustomerNumber, item.ReplenexNumber, item.UnitOfIssue, item.Whse, token); ;
         }
+    }
+    private async Task SaveRecord(ReturnModel item)
+    {
+        await _db.SaveRecord(item);
     }
 }
