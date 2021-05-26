@@ -38,5 +38,7 @@ namespace DataAccessLibrary.Models
 
         public string CustomerPartNum { get; set; }
 
+        public DateTime InsertDate { get; set; }
+
     }
 }

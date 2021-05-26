@@ -56,7 +56,7 @@ else
 
     private async Task DeleteRecord()
     {
-        await _db.DeleteRecord(id);
+        await _db.DeleteRecord(item[0]);
         NavToReturns();
     }
 

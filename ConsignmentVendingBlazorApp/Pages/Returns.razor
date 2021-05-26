@@ -15,11 +15,14 @@
 }
 else
 {
-    <button class="btn btn-danger">Submit To SXe</button>
+<div style="margin-bottom:2%">
+    <button class="btn btn-danger">SUBMIT TO SXe</button> <button type="button" class="btn btn-success" style="margin-left: 10%" @onclick="SaveAllRecords">SAVE ALL</button>
+</div>  
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Insert Date</th>
                 <th>Cono</th>
                 <th>Customer Number</th>
                 <th>Ship To</th>
@@ -43,6 +46,7 @@ else
                 int actual = Convert.ToInt32(item.WhseQtyAvail) - item.SupplyProQty;
             <tr>
                 <td>@item.ID</td>
+                <td>@item.InsertDate.ToString("MM/dd/yyyy")</td>
                 <td>@item.Cono</td>
                 <td>@item.CustomerNumber</td>
                 <td>@item.ShipTo</td>
@@ -58,7 +62,7 @@ else
                 <td>@item.WhseQtyAvail</td>
                 <td>@actual</td>
                 <td><button type="button" class="btn btn-success" @onclick="@(() => SaveRecord(item))">SAVE</button>
-                <button type="button" class="btn btn-danger" href="/deletereturn/@item.ID" style="margin-top:5%">DELETE</button></td>
+                <a type="button" class="btn btn-danger" href="/deletereturn/@item.ID" style="margin-top:5%">DELETE</a></td>
             </tr>
             }
         </tbody>
@@ -82,4 +86,22 @@ else
     {
         await _db.SaveRecord(item);
     }
+
+    private async Task SaveAllRecords()
+    {
+        foreach (var item in returns)
+        {
+            await _db.SaveRecord(item);
+        }
+    }
+
+    private async Task DeleteAllRecords()
+    {
+        foreach (var item in returns)
+        {
+            await _db.DeleteRecord(item);
+            ;
+        }
+    }
+
 }

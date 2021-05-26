@@ -1,4 +1,6 @@
 ﻿using ConsignmentVendingBlazorApp.Models;
+using DataAccessLibrary.Models;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,8 @@ namespace ConsignmentVendingBlazorApp.Services
 {
     public class ApiService
     {
+        public ILogger _logger;
+
         public HttpClient _httpClient;
 
         public ApiService(HttpClient client)
@@ -44,27 +48,39 @@ namespace ConsignmentVendingBlazorApp.Services
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var quote = "\"";
             var body = $"{{\r\n {quote}request{quote}: {{\r\n {quote}companyNumber{quote}: {cono},\r\n {quote}operatorInit{quote}: {quote}sys{quote},\r\n {quote}operatorPassword{quote}: {quote}{quote},\r\n {quote}productCode{quote}: {quote}{replenexNumber}{quote},\r\n {quote}unitOfMeasure{quote}: {quote}{unitOfMeasure}{quote},\r\n {quote}warehouse{quote}: {quote}{whse}{quote},\r\n {quote}useCrossReferenceFlag{quote}: {quote}false{quote},\r\n {quote}includeUnavailableInventory{quote}: {quote}false{quote},\r\n {quote}tInfieldvalue{quote}: {{\r\n {quote}t-infieldvalue{quote}: []\r\n }}\r\n }}\r\n }}";
-            StringContent content = new StringContent(body, Encoding.UTF8, "application/json");
+            StringContent content = new(body, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await _httpClient.PostAsync(WhseAvailCall, content);
-                if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                WhseProdAvailResponse.Rootobject responseRootObject = JsonConvert.DeserializeObject<WhseProdAvailResponse.Rootobject>(jsonResponse);
+                if (responseRootObject.Response is null)
                 {
-                    var jsonResponse = await response.Content.ReadAsStringAsync();
-                    WhseProdAvailResponse.Rootobject responseRootObject = JsonConvert.DeserializeObject<WhseProdAvailResponse.Rootobject>(jsonResponse);
-                    if (responseRootObject.Response is null)
-                    {
-                        return -99;
-                    }
-                    WhseProdAvailResponse.Response responseContent = responseRootObject.Response;
-                    return responseContent.DistributorNetAvailable;
+                    return -99;
                 }
-                else
-                {
-                    throw new Exception(response.ReasonPhrase);
-                }
+                WhseProdAvailResponse.Response responseContent = responseRootObject.Response;
+                return responseContent.DistributorNetAvailable;
+            }
+            else
+            {
+                throw new Exception(response.ReasonPhrase);
+            }
         }
 
-
-
+        //public async Task<OrderSubmitResponse> OrderSubmitAsync(Token token, ReturnModel item)
+        //{
+        //    string returnFlag;
+        //    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token.AccessToken);
+        //    _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //    if (item.Qty<0)
+        //    {
+        //        returnFlag = "true";
+        //    }
+        //    else
+        //    {
+        //        returnFlag = "false";
+        //    }
+        //}
     }
 }

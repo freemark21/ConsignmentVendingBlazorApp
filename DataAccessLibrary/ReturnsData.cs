@@ -23,10 +23,12 @@ namespace DataAccessLibrary
             return _db.LoadData<ReturnModel, dynamic>(sql, new { });
         }
 
-        public Task DeleteRecord(int ID)
-        {
-            string sql = "spConsignmentReturns_DeleteRecord @ID";
-            return _db.SaveData(sql, new { ID });
+        public Task DeleteRecord(ReturnModel item)
+        {   
+            DynamicParameters parameters = new();
+            parameters.Add("@ID", item.ID);
+            string sql = "spConsignmentReturns_DeleteRecord";
+            return _db.SaveData(sql, parameters);
         }
 
         public Task<List<ReturnModel>> GetSingleReturn(int ID)
@@ -37,9 +39,10 @@ namespace DataAccessLibrary
 
         public Task SaveRecord(ReturnModel item)
         {
-            DynamicParameters parameters = new DynamicParameters();
+            DynamicParameters parameters = new();
             parameters.Add("@ID", item.ID);
             parameters.Add("@Qty", item.Qty);
+            parameters.Add("@SupplyProQty", item.SupplyProQty);
             string sql = "spConsignmentReturns_SaveRecord";
             return _db.SaveData(sql, parameters);
         }

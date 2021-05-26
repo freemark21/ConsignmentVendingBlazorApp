@@ -56,103 +56,191 @@ namespace ConsignmentVendingBlazorApp.Models
 
         public class Sxapi_Oehdr1
         {
-            public string invoiceDt { get; set; }
-            public string invNr { get; set; }
-            public string invSuf { get; set; }
-            public string custPo { get; set; }
-            public string invType { get; set; }
-            public string refer { get; set; }
-            public string partnerId { get; set; }
-            public string buyParty { get; set; }
-            public string dept { get; set; }
-            public string orderDisp { get; set; }
-            public string _event { get; set; }
-            public string vendNo2 { get; set; }
-            public string cancelDt { get; set; }
-            public string shipDt { get; set; }
-            public string promiseDt { get; set; }
-            public string reqShipDt { get; set; }
-            public string shipVia { get; set; }
-            public string poIssDt { get; set; }
-            public string enterDt { get; set; }
-            public string pkgId { get; set; }
-            public string ackType { get; set; }
-            public string currentDt { get; set; }
-            public string user1 { get; set; }
-            public string user2 { get; set; }
-            public string user3 { get; set; }
-            public string userInv { get; set; }
-            public string transType { get; set; }
-            public string shipInstr { get; set; }
-            public string placedBy { get; set; }
-            public string whse { get; set; }
-            public string coreChg { get; set; }
-            public string datcCost { get; set; }
-            public string downPmt { get; set; }
-            public string specDiscAmt { get; set; }
-            public string restockAmt { get; set; }
-            public string taxAmt { get; set; }
-            public string gstTaxAmt { get; set; }
-            public string pstTaxAmt { get; set; }
-            public string woDiscAmt { get; set; }
-            public string termsDiscAmt { get; set; }
-            public string coNo { get; set; }
+            [JsonProperty("invoiceDt")]
+            public string InvoiceDt { get; set; }
+            [JsonProperty("invNr")]
+            public string InvNr { get; set; }
+            [JsonProperty("invSuf")]
+            public string InvSuf { get; set; }
+            [JsonProperty("custPo")]
+            public string CustPo { get; set; }
+            [JsonProperty("invType")]
+            public string InvType { get; set; }
+            [JsonProperty("refer")]
+            public string Refer { get; set; }
+            [JsonProperty("partnerId")]
+            public string PartnerId { get; set; }
+            [JsonProperty("buyParty")]
+            public string BuyParty { get; set; }
+            [JsonProperty("dept")]
+            public string Dept { get; set; }
+            [JsonProperty("orderDisp")]
+            public string OrderDisp { get; set; }
+            [JsonProperty("_event")]
+            public string Event { get; set; }
+            [JsonProperty("vendNo2")]
+            public string VendNo2 { get; set; }
+            [JsonProperty("cancelDt")]
+            public string CancelDt { get; set; }
+            [JsonProperty("shipDt")]
+            public string ShipDt { get; set; }
+            [JsonProperty("promiseDt")]
+            public string PromiseDt { get; set; }
+            [JsonProperty("reqShipDt")]
+            public string ReqShipDt { get; set; }
+            [JsonProperty("shipVia")]
+            public string ShipVia { get; set; }
+            [JsonProperty("poIssDt")]
+            public string PoIssDt { get; set; }
+            [JsonProperty("enterDt")]
+            public string EnterDt { get; set; }
+            [JsonProperty("pkgId")]
+            public string PkgId { get; set; }
+            [JsonProperty("ackType")]
+            public string AckType { get; set; }
+            [JsonProperty("currentDt")]
+            public string CurrentDt { get; set; }
+            [JsonProperty("user1")]
+            public string User1 { get; set; }
+            [JsonProperty("user2")]
+            public string User2 { get; set; }
+            [JsonProperty("user3")]
+            public string User3 { get; set; }
+            [JsonProperty("userInv")]
+            public string UserInv { get; set; }
+            [JsonProperty("transType")]
+            public string TransType { get; set; }
+            [JsonProperty("shipInstr")]
+            public string ShipInstr { get; set; }
+            [JsonProperty("placedBy")]
+            public string PlacedBy { get; set; }
+            [JsonProperty("whse")]
+            public string Whse { get; set; }
+            [JsonProperty("coreChg")]
+            public string CoreChg { get; set; }
+            [JsonProperty("datcCost")]
+            public string DatcCost { get; set; }
+            [JsonProperty("downPmt")]
+            public string DownPmt { get; set; }
+            [JsonProperty("specDiscAmt")]
+            public string SpecDiscAmt { get; set; }
+            [JsonProperty("restockAmt")]
+            public string RestockAmt { get; set; }
+            [JsonProperty("taxAmt")]
+            public string TaxAmt { get; set; }
+            [JsonProperty("gstTaxAmt")]
+            public string GstTaxAmt { get; set; }
+            [JsonProperty("pstTaxAmt")]
+            public string PstTaxAmt { get; set; }
+            [JsonProperty("woDiscAmt")]
+            public string WoDiscAmt { get; set; }
+            [JsonProperty("termsDiscAmt")]
+            public string TermsDiscAmt { get; set; }
+            [JsonProperty("coNo")]
+            public string CoNo { get; set; }
         }
 
         public class Sxapi_Oeitm
         {
-            public Sxapi_Oeitm1[] sxapi_oeitm { get; set; }
+            public Sxapi_Oeitm1[] Sxapi_oeitm { get; set; }
         }
 
         public class Sxapi_Oeitm1
         {
-            public string lineIden { get; set; }
-            public string qtyUom { get; set; }
-            public string prodSvcCd { get; set; }
-            public string sellerProd { get; set; }
-            public string buyerProd { get; set; }
-            public string descrip { get; set; }
-            public string user1 { get; set; }
-            public string user2 { get; set; }
-            public string user3 { get; set; }
-            public string user4 { get; set; }
-            public string user5 { get; set; }
-            public string ordStatCd { get; set; }
-            public string chgCd { get; set; }
-            public string boType { get; set; }
-            public string user6 { get; set; }
-            public string user7 { get; set; }
-            public string user8 { get; set; }
-            public string user9 { get; set; }
-            public string user10 { get; set; }
-            public string specCostTy { get; set; }
-            public string sCostUnit { get; set; }
-            public string xrefProdTy { get; set; }
-            public string taxableFl { get; set; }
-            public string taxableTy { get; set; }
-            public string taxGroup { get; set; }
-            public string promiseDt { get; set; }
-            public string reqShipDt { get; set; }
-            public string specNsType { get; set; }
-            public string upc { get; set; }
-            public string sxLineNo { get; set; }
-            public string qtyShip { get; set; }
-            public string price { get; set; }
-            public string discPct { get; set; }
-            public string qtyOrd { get; set; }
-            public string discAmt { get; set; }
-            public string taxAmt1 { get; set; }
-            public string taxAmt2 { get; set; }
-            public string taxAmt3 { get; set; }
-            public string taxAmt4 { get; set; }
-            public string upcSection1 { get; set; }
-            public string upcSection2 { get; set; }
-            public string upcSection3 { get; set; }
-            public string upcSection4 { get; set; }
-            public string upcSection5 { get; set; }
-            public string upcSection6 { get; set; }
-            public string restockChg { get; set; }
-            public string spCostUnit { get; set; }
+            [JsonProperty("lineIden")]
+            public string LineIden { get; set; }
+            [JsonProperty("qtyUom")]
+            public string QtyUom { get; set; }
+            [JsonProperty("prodSvcCd")]
+            public string ProdSvcCd { get; set; }
+            [JsonProperty("sellerProd")]
+            public string SellerProd { get; set; }
+            [JsonProperty("buyerProd")]
+            public string BuyerProd { get; set; }
+            [JsonProperty("descrip")]
+            public string Descrip { get; set; }
+            [JsonProperty("user1")]
+            public string User1 { get; set; }
+            [JsonProperty("user2")]
+            public string User2 { get; set; }
+            [JsonProperty("user3")]
+            public string User3 { get; set; }
+            [JsonProperty("user4")]
+            public string User4 { get; set; }
+            [JsonProperty("user5")]
+            public string User5 { get; set; }
+            [JsonProperty("ordStatCd")]
+            public string OrdStatCd { get; set; }
+            [JsonProperty("chgCd")]
+            public string ChgCd { get; set; }
+            [JsonProperty("boType")]
+            public string BoType { get; set; }
+            [JsonProperty("user6")]
+            public string User6 { get; set; }
+            [JsonProperty("user7")]
+            public string User7 { get; set; }
+            [JsonProperty("user8")]
+            public string User8 { get; set; }
+            [JsonProperty("user9")]
+            public string User9 { get; set; }
+            [JsonProperty("user10")]
+            public string User10 { get; set; }
+            [JsonProperty("specCostTy")]
+            public string SpecCostTy { get; set; }
+            [JsonProperty("sCostUnit")]
+            public string SCostUnit { get; set; }
+            [JsonProperty("xrefProdTy")]
+            public string XrefProdTy { get; set; }
+            [JsonProperty("taxableFl")]
+            public string TaxableFl { get; set; }
+            [JsonProperty("taxableTy")]
+            public string TaxableTy { get; set; }
+            [JsonProperty("taxGroup")]
+            public string TaxGroup { get; set; }
+            [JsonProperty("promiseDt")]
+            public string PromiseDt { get; set; }
+            [JsonProperty("reqShipDt")]
+            public string ReqShipDt { get; set; }
+            [JsonProperty("specNsType")]
+            public string SpecNsType { get; set; }
+            [JsonProperty("upc")]
+            public string Upc { get; set; }
+            [JsonProperty("sxLineNo")]
+            public string SxLineNo { get; set; }
+            [JsonProperty("qtyShip")]
+            public string QtyShip { get; set; }
+            [JsonProperty("price")]
+            public string Price { get; set; }
+            [JsonProperty("discPct")]
+            public string DiscPct { get; set; }
+            [JsonProperty("qtyOrd")]
+            public string QtyOrd { get; set; }
+            [JsonProperty("discAmt")]
+            public string DiscAmt { get; set; }
+            [JsonProperty("taxAmt1")]
+            public string TaxAmt1 { get; set; }
+            [JsonProperty("taxAmt2")]
+            public string TaxAmt2 { get; set; }
+            [JsonProperty("taxAmt3")]
+            public string TaxAmt3 { get; set; }
+            [JsonProperty("taxAmt4")]
+            public string TaxAmt4 { get; set; }
+            [JsonProperty("upcSection1")]
+            public string UpcSection1 { get; set; }
+            [JsonProperty("upcSection2")]
+            public string UpcSection2 { get; set; }
+            [JsonProperty("upcSection3")]
+            public string UpcSection3 { get; set; }
+            [JsonProperty("upcSection4")]
+            public string UpcSection4 { get; set; }
+            [JsonProperty("upcSection5")]
+            public string UpcSection5 { get; set; }
+            [JsonProperty("upcSection6")]
+            public string UpcSection6 { get; set; }
+            [JsonProperty("restockChg")]
+            public string RestockChg { get; set; }
+            [JsonProperty("spCostUnit")]
+            public string SpCostUnit { get; set; }
         }
 
     }
