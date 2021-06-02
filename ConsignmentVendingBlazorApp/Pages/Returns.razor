@@ -55,10 +55,10 @@ else
                 <td>@item.CustomerPartNum</td>
                 <td>@item.ProductName</td>
                 <td>@item.ReplenexNumber</td>
-                <td><input type="number" @bind-value="@item.Qty" /></td>
+                <td><input type="number" class="form-control" @bind-value="@item.Qty" /></td>
                 <td>@item.UnitOfIssue</td>
                 <td>@item.SupplyProPrice</td>
-                <td><input type="number" @bind-value="@item.SupplyProQty"/></td>
+                <td><input type="number" class="form-control" @bind-value="@item.SupplyProQty"/></td>
                 <td>@item.WhseQtyAvail</td>
                 <td>@actual</td>
                 <td><button type="button" class="btn btn-success" @onclick="@(() => SaveRecord(item))">SAVE</button>

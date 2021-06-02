@@ -18,6 +18,7 @@ namespace ConsignmentVendingBlazorApp.Services
 
         public HttpClient _httpClient;
 
+        #endregion
         public ApiService(HttpClient client)
         {
             _httpClient = client;
@@ -68,19 +69,29 @@ namespace ConsignmentVendingBlazorApp.Services
             }
         }
 
-        //public async Task<OrderSubmitResponse> OrderSubmitAsync(Token token, ReturnModel item)
-        //{
-        //    string returnFlag;
-        //    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token.AccessToken);
-        //    _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //    if (item.Qty<0)
-        //    {
-        //        returnFlag = "true";
-        //    }
-        //    else
-        //    {
-        //        returnFlag = "false";
-        //    }
-        //}
+        public async Task<List<OrderSubmitResponse>> OrderSubmitAsync(Token token, List<ReturnModel> returns)
+        {
+            var quote = "\"";
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token.AccessToken);
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            while (returns.Count > 0)
+            {
+                var distinctQuery = returns.GroupBy(elem => new { elem.Cono, elem.CustomerNumber, elem.ShipTo }).Select(group => group.First());
+                foreach (var item in distinctQuery)
+                {
+                    var groupOfOrders = returns.Where(line => line.Cono == item.Cono && line.CustomerNumber == item.CustomerNumber && line.ShipTo == item.ShipTo);
+                    foreach (var line in groupOfOrders)
+                    {
+                        string returnFlag = (line.Qty > 0) ? "false" : "true";
+                        if (groupOfOrders.Count() > 1)
+                        {
+                            var body = $"{{\r\n {quote}request{quote}: {{\r\n {quote}companyNumber{quote}: {line.Cono},\r\n {quote}operatorInit{quote}: {quote}sys{quote},\r\n {quote}operatorPassword{quote}: {quote}{quote},\r\n {quote}sxt_orderV4{quote}: {{\r\n {quote}sxt_orderV4{quote}: [\r\n{{\r\n {quote}actionType{quote}: {quote}storefront{quote}, \r\n {quote}boFl{quote}: {quote}false{quote}, \r\n {quote}transType{quote}: {quote}{returnFlag}{quote},";
+                        }
+                    }
+                }                            
+                
+            }
+
+        }
     }
 }
