@@ -48,7 +48,19 @@ namespace ConsignmentVendingBlazorApp.Services
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token.AccessToken);
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var quote = "\"";
-            var body = $"{{\r\n {quote}request{quote}: {{\r\n {quote}companyNumber{quote}: {cono},\r\n {quote}operatorInit{quote}: {quote}sys{quote},\r\n {quote}operatorPassword{quote}: {quote}{quote},\r\n {quote}productCode{quote}: {quote}{replenexNumber}{quote},\r\n {quote}unitOfMeasure{quote}: {quote}{unitOfMeasure}{quote},\r\n {quote}warehouse{quote}: {quote}{whse}{quote},\r\n {quote}useCrossReferenceFlag{quote}: {quote}false{quote},\r\n {quote}includeUnavailableInventory{quote}: {quote}false{quote},\r\n {quote}tInfieldvalue{quote}: {{\r\n {quote}t-infieldvalue{quote}: []\r\n }}\r\n }}\r\n }}";
+
+            var body = $"{{\r\n {quote}request{quote}: {{\r\n " +
+                        $"{quote}companyNumber{quote}: {cono},\r\n " +
+                        $"{quote}operatorInit{quote}: {quote}sys{quote},\r\n " +
+                        $"{quote}operatorPassword{quote}: {quote}{quote},\r\n " +
+                        $"{quote}productCode{quote}: {quote}{replenexNumber}{quote},\r\n " +
+                        $"{quote}unitOfMeasure{quote}: {quote}{unitOfMeasure}{quote},\r\n " +
+                        $"{quote}warehouse{quote}: {quote}{whse}{quote},\r\n " +
+                        $"{quote}useCrossReferenceFlag{quote}: {quote}false{quote},\r\n " +
+                        $"{quote}includeUnavailableInventory{quote}: {quote}false{quote},\r\n " +
+                        $"{quote}tInfieldvalue{quote}: {{\r\n " +
+                        $"{quote}t-infieldvalue{quote}: []\r\n }}\r\n }}\r\n }}";
+
             StringContent content = new(body, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await _httpClient.PostAsync(WhseAvailCall, content);
@@ -69,27 +81,35 @@ namespace ConsignmentVendingBlazorApp.Services
             }
         }
 
-        public async Task<List<OrderSubmitResponse>> OrderSubmitAsync(Token token, List<ReturnModel> returns)
+        public async task<list<ordersubmitresponse>> ordersubmitasync(token token, list<returnmodel> returns)
         {
             var quote = "\"";
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token.AccessToken);
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            while (returns.Count > 0)
+            _httpclient.defaultrequestheaders.authorization = new authenticationheadervalue("bearer", token.accesstoken);
+            _httpclient.defaultrequestheaders.accept.add(new mediatypewithqualityheadervalue("application/json"));
+            while (returns.count > 0)
             {
-                var distinctQuery = returns.GroupBy(elem => new { elem.Cono, elem.CustomerNumber, elem.ShipTo }).Select(group => group.First());
-                foreach (var item in distinctQuery)
+                var distinctquery = returns.groupby(elem => new { elem.cono, elem.customernumber, elem.shipto }).select(group => group.first());
+                foreach (var item in distinctquery)
                 {
-                    var groupOfOrders = returns.Where(line => line.Cono == item.Cono && line.CustomerNumber == item.CustomerNumber && line.ShipTo == item.ShipTo);
-                    foreach (var line in groupOfOrders)
+                    var body = $"{{\r\n {quote}request{quote}: {{\r\n " +
+                                $"{quote}companynumber{quote}: {item.cono},\r\n " +
+                                $"{quote}operatorinit{quote}: {quote}sys{quote},\r\n " +
+                                $"{quote}operatorpassword{quote}: {quote}{quote},\r\n " +
+                                $"{quote}sxt_orderv4{quote}: {{\r\n " +
+                                $"{quote}sxt_orderv4{quote}: [\r\n{{\r\n " +
+                                $"{quote}actiontype{quote}: {quote}storefront{quote},\r\n " +
+                                $"{quote}bofl{quote}: {quote}false{quote},\r\n ";
+                    var groupoforders = returns.where(line => line.cono == item.cono && line.customernumber == item.customernumber && line.shipto == item.shipto);
+                    foreach (var line in groupoforders)
                     {
-                        string returnFlag = (line.Qty > 0) ? "false" : "true";
-                        if (groupOfOrders.Count() > 1)
+                        string returnflag = (line.qty > 0) ? "false" : "true";
+                        if (groupoforders.count() > 1)
                         {
-                            var body = $"{{\r\n {quote}request{quote}: {{\r\n {quote}companyNumber{quote}: {line.Cono},\r\n {quote}operatorInit{quote}: {quote}sys{quote},\r\n {quote}operatorPassword{quote}: {quote}{quote},\r\n {quote}sxt_orderV4{quote}: {{\r\n {quote}sxt_orderV4{quote}: [\r\n{{\r\n {quote}actionType{quote}: {quote}storefront{quote}, \r\n {quote}boFl{quote}: {quote}false{quote}, \r\n {quote}transType{quote}: {quote}{returnFlag}{quote},";
+                            body += $"{quote}transtype{quote}: {quote}{returnflag}{quote},";
                         }
                     }
-                }                            
-                
+                }
+
             }
 
         }
