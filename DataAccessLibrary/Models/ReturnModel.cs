@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,8 @@ namespace DataAccessLibrary.Models
 
         public string SupplyProPrice { get; set; }
 
+        [Required(ErrorMessage = "Ship To is required") ]
+        [StringLength(2, ErrorMessage ="Ship To is required")]
         public string ShipTo { get; set; }
 
         public int SupplyProQty { get; set; }

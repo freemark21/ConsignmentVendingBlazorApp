@@ -2,8 +2,9 @@
 @using DataAccessLibrary
 @using DataAccessLibrary.Models
 @using ConsignmentVendingBlazorApp.Models
+@using System.ComponentModel.DataAnnotations
 
-@inject IReturnsData _db 
+@inject IReturnsData _db
 @inject Services.ApiService apiService
 @inject NavigationManager NavigationManager
 
@@ -15,63 +16,72 @@
 }
 else
 {
-<div style="margin-bottom:2%">
-    <button class="btn btn-danger">SUBMIT TO SXe</button> <button type="button" class="btn btn-success" style="margin-left: 10%" @onclick="SaveAllRecords">SAVE ALL</button>
-</div>  
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Insert Date</th>
-                <th>Cono</th>
-                <th>Customer Number</th>
-                <th>Ship To</th>
-                <th>Warehouse</th>
-                <th>UserID</th>
-                <th>Customer Part#</th>
-                <th>Product Name</th>
-                <th>Replenex Part#</th>
-                <th>Qty</th>
-                <th>Unit of Issue</th>
-                <th>SupplyPro Price</th>
-                <th>SupplyPro Qty</th>
-                <th>Whse Qty Available</th>
-                <th>Actual</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in returns)
-            {
-                int actual = Convert.ToInt32(item.WhseQtyAvail) - item.SupplyProQty;
-            <tr>
-                <td>@item.ID</td>
-                <td>@item.InsertDate.ToString("MM/dd/yyyy")</td>
-                <td>@item.Cono</td>
-                <td>@item.CustomerNumber</td>
-                <td>@item.ShipTo</td>
-                <td>@item.Whse</td>
-                <td>@item.UserID</td>
-                <td>@item.CustomerPartNum</td>
-                <td>@item.ProductName</td>
-                <td>@item.ReplenexNumber</td>
-                <td><input type="number" class="form-control" @bind-value="@item.Qty" /></td>
-                <td>@item.UnitOfIssue</td>
-                <td>@item.SupplyProPrice</td>
-                <td><input type="number" class="form-control" @bind-value="@item.SupplyProQty"/></td>
-                <td>@item.WhseQtyAvail</td>
-                <td>@actual</td>
-                <td><button type="button" class="btn btn-success" @onclick="@(() => SaveRecord(item))">SAVE</button>
-                <a type="button" class="btn btn-danger" href="/deletereturn/@item.ID" style="margin-top:5%">DELETE</a></td>
-            </tr>
-            }
-        </tbody>
-    </table>
+    <div style="margin-bottom:2%">
+        <button class="btn btn-danger" @onclick="OrderSubmit">SUBMIT TO SXe</button> <button type="button" class="btn btn-success" style="margin-left: 10%" @onclick="SaveAllRecords">SAVE ALL</button>
+    </div>
+    <EditForm Model="returns">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Insert Date</th>
+                    <th>Cono</th>
+                    <th>Customer Number</th>
+                    <th>Ship To</th>
+                    <th>Warehouse</th>
+                    <th>UserID</th>
+                    <th>Customer Part#</th>
+                    <th>Product Name</th>
+                    <th>Replenex Part#</th>
+                    <th>Qty</th>
+                    <th>Unit of Issue</th>
+                    <th>SupplyPro Price</th>
+                    <th>SupplyPro Qty</th>
+                    <th>Whse Qty Available</th>
+                    <th>Actual</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in returns)
+                {
+                    int actual = Convert.ToInt32(item.WhseQtyAvail) - item.SupplyProQty;
+                    <tr>
+                        <td>@item.ID</td>
+                        <td>@item.InsertDate.ToString("MM/dd/yyyy")</td>
+                        <td>@item.Cono</td>
+                        <td>@item.CustomerNumber</td>
+                        <td><input type="text" class="form-control" @bind-value="@item.ShipTo" /></td>
+                        <ValidationMessage For="@(() => item.ShipTo)"></ValidationMessage>
+                        <td>@item.Whse</td>
+                        <td>@item.UserID</td>
+                        <td>@item.CustomerPartNum</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.ReplenexNumber</td>
+                        <td><input type="number" class="form-control" @bind-value="@item.Qty" /></td>
+                        <td>@item.UnitOfIssue</td>
+                        <td>@item.SupplyProPrice</td>
+                        <td><input type="number" class="form-control" @bind-value="@item.SupplyProQty" /></td>
+                        <td>@item.WhseQtyAvail</td>
+                        <td>@actual</td>
+                        <td>
+                            <button type="button" class="btn btn-success" @onclick="@(() => SaveRecord(item))">SAVE</button>
+                            <a type="button" class="btn btn-danger" href="/deletereturn/@item.ID" style="margin-top:5%">DELETE</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </EditForm>
 }
 
 @code {
     private List<ReturnModel> returns;
     private Token token;
+    private List<OrderSubmitResponse> orderSubmitResponses;
 
     protected override async Task OnInitializedAsync()
     {
@@ -102,6 +112,11 @@ else
             await _db.DeleteRecord(item);
             ;
         }
+    }
+
+    private async Task<List<OrderSubmitResponse>> OrderSubmit()
+    {
+        return orderSubmitResponses = await apiService.OrderSubmitAsync(token, returns);
     }
 
 }
