@@ -90,20 +90,19 @@ namespace ConsignmentVendingBlazorApp.Services
             foreach (ReturnModel distinctReturn in distinctQuery)
             {
                 var lineCounter = 1;
-                var body = $"{{\r\n {quote}request{quote}: {{\r\n " +
-                            $"{quote}companynumber{quote}: {distinctReturn.Cono},\r\n " +
-                            $"{quote}operatorinit{quote}: {quote}sys{quote},\r\n " +
-                            $"{quote}operatorpassword{quote}: {quote}{quote},\r\n " +
-                            $"{quote}sxt_orderv4{quote}: {{\r\n " +
-                            $"{quote}sxt_orderv4{quote}: [\r\n{{\r\n " +
-                            $"{quote}actiontype{quote}: {quote}storefront{quote},\r\n " +
-                            $"{quote}bofl{quote}: {quote}false{quote},\r\n " +
-                            $"{quote}transtype{quote}: {quote}RM{quote},\r\n" +
-                            $"{quote}whse{quote}: {quote}{distinctReturn.Whse}{quote},\r\n" +
-                            $"{quote}takenby{quote}: {quote}Cons{quote},\r\n" +
+                var body = $"{{\r\n {quote}request{quote}: {{\r\n" +
+                            $"{quote}companyNumber{quote}: {distinctReturn.Cono},\r\n" +
+                            $"{quote}operatorInit{quote}: {quote}sys{quote},\r\n" +
+                            $"{quote}operatorPassword{quote}: {quote}{quote},\r\n" +
+                            $"{quote}sxt_orderV4{quote}: {{\r\n" +
+                            $"{quote}sxt_orderV4{quote}: [\r\n{{\r\n" +
+                            $"{quote}actionType{quote}: {quote}storefront{quote},\r\n" +
+                            $"{quote}boFl{quote}: {quote}false{quote},\r\n" +
                             $"{quote}buyer{quote}: {quote}Consignment{quote},\r\n" +
                             $"{quote}orderNo{quote}: {quote}0{quote},\r\n" +
-                            $"{quote}orderSuf{quote}: {quote}0{quote}\r\n}}\r\n]\r\n}}," +
+                            $"{quote}orderSuf{quote}: {quote}0{quote}\r\n" +
+                            $"{quote}takenby{quote}: {quote}Cons{quote},\r\n" +
+                            $"{quote}transType{quote}: {quote}RM{quote},\r\n}}\r\n]\r\n}},\r\n" +
                             $"{quote}sxt_customer{quote}: {{\r\n {quote}sxt_customer{quote}: [\r\n{{\r\n" +
                             $"{quote}custNo{quote}: {quote}{distinctReturn.CustomerNumber}{quote}\r\n}}\r\n]\r\n}},\r\n" +
                             $"{quote}sxt_itemV4{quote}: {{\r\n{quote}sxt_itemV4{quote}: [\r\n";
@@ -131,14 +130,14 @@ namespace ConsignmentVendingBlazorApp.Services
                         $"{quote}sxt_schedule{quote}: {{\r\n {quote}sxt_schedule{quote}: [\r\n{{\r\n" +
                         $"{quote}seqNo{quote}: 0 \r\n}}\r\n]\r\n}},\r\n" +
                         $"{quote}sxt_total{quote}: {{\r\n {quote}sxt_total{quote}: [\r\n{{\r\n" +
-                        $"{quote}totLn{quote}: {quote}0{quote} \r\n}}\r\n]\r\n}}," +
+                        $"{quote}totLn{quote}: {quote}0{quote} \r\n}}\r\n]\r\n}},\r\n" +
                         $"{quote}sxt_header_extra{quote}: {{\r\n {quote}sxt_header_extra{quote}: [\r\n{{\r\n" +
                         $"{quote}SeqNo{quote}: 0 \r\n}}\r\n]\r\n}},\r\n" +
                         $"{quote}sxt_line_extra{quote}: {{\r\n {quote}sxt_line_extra{quote}: [\r\n{{\r\n" +
                         $"{quote}SeqNo{quote}: 0 \r\n}}\r\n]\r\n}},\r\n" +
                         $"{quote}sxt_line_component{quote}: {{\r\n {quote}sxt_line_component{quote}: [\r\n{{\r\n}}\r\n]\r\n}}\r\n}}";
-
-                StringContent content = new(body, Encoding.UTF8, "application/json");
+                var jsonRequest = JsonConvert.SerializeObject(body);
+                StringContent content = new(jsonRequest, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _httpClient.PostAsync(OEfullOrdMntCall, content);
                 if (response.IsSuccessStatusCode)
                 {

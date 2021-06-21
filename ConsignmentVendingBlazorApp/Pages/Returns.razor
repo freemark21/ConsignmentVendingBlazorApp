@@ -19,7 +19,7 @@ else
     <div style="margin-bottom:2%">
         <button class="btn btn-danger" @onclick="OrderSubmit">SUBMIT TO SXe</button> <button type="button" class="btn btn-success" style="margin-left: 10%" @onclick="SaveAllRecords">SAVE ALL</button>
     </div>
-    <EditForm Model="returns">
+    <EditForm Model="@returns">
         <DataAnnotationsValidator />
         <ValidationSummary />
 
@@ -103,6 +103,7 @@ else
         {
             await _db.SaveRecord(item);
         }
+        StateHasChanged();
     }
 
     private async Task DeleteAllRecords()

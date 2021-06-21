@@ -14,8 +14,8 @@ namespace DataAccessLibrary
     {
         private readonly IConfiguration _config;
 
-        public string ConnectionStringName { get; set; } = "ConsignmentReturns";
-
+        //public string ConnectionStringName { get; set; } = "ConsignmentReturns";
+        public string ConnectionStringName { get; set; } = "TestConsignmentReturns";
         public SqlDataAccess(IConfiguration config)
         {
             _config = config;
